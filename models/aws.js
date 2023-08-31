@@ -21,17 +21,19 @@ const router = express.Router()
 const questionSchema = new mongoose.Schema({
 
 
-  question: { type: String, required: true },
+  question: { type: String},
 
  
 
-  questionType: { type: String, required: true },
+  questionType: { type: String },
 
  
 
   options: { type: Array },
 
-  skills:{type:String,required:true}
+  skills:{type:String},
+
+  Difficulty_Level:{type:String}
 
  
 

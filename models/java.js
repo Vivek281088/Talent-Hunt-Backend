@@ -33,6 +33,8 @@ const questionSchema1 = new mongoose.Schema({
   options: { type: Array, required: true },
 
   skills:{type:String,required:true},
+  
+  Difficulty_Level:{type:String}
 
   
 

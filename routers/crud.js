@@ -11,12 +11,14 @@ const managername = require("../models/managername");
 
 const awsquestion = require("../models/aws");
 const javaquestion = require("../models/java");
+const Question=require("../models/questions_M1");
 
 const collections = [awsquestion, javaquestion];
 const a = new Map();
 
 a.set("JAVA", javaquestion);
 a.set("AWS", awsquestion);
+
 async function fetchQuestions(findArray) {
   const valueMap = new Map();
   for (const a1 of findArray) {
@@ -33,9 +35,9 @@ router.post("/demo", async (req, res) => {
   const findArray = req.body.skill;
   try {
     const result = await fetchQuestions(findArray);
-   
+
     const final = JSON.stringify(result);
-    
+
     res.setHeader("Content-Type", "application/json");
     const mapto = {};
     result.forEach((value, key) => {
@@ -43,7 +45,7 @@ router.post("/demo", async (req, res) => {
     });
     res.send(JSON.stringify(mapto, null, 2));
   } catch (error) {
-   
+
     res.send("Error please check");
   }
 });
@@ -107,9 +109,9 @@ router.get("/getskill", async (req, res) => {
 
 router.get("/getmanagername", async (req, res) => {
   try {
-    const skill = await modelmanagername.find();
+    const mname = await modelmanagername.find();
 
-    res.json(skill);
+    res.json(mname);
   } catch (err) {
     res.send("Error " + err);
   }
@@ -177,7 +179,7 @@ router.post("/selected", (req, res) => {
 //post aws skill
 router.post("/awsquestion", async (req, res) => {
   try {
-    const { question, questionType, options, skills } = req.body;
+    const { question, questionType, options, skills,Difficulty_Level } = req.body;
 
     const newQuestion = new awsquestion({
       // Use the correct model here
@@ -189,6 +191,7 @@ router.post("/awsquestion", async (req, res) => {
       options,
 
       skills,
+      Difficulty_Level
     });
 
     await newQuestion.save();
@@ -206,7 +209,7 @@ router.post("/awsquestion", async (req, res) => {
 /////post java questions
 router.post("/javaquestion", async (req, res) => {
   try {
-    const { question, questionType, options, skills } = req.body;
+    const { question, questionType, options, skills,Difficulty_Level } = req.body;
 
     const newQuestion = new javaquestion({
       // Use the correct model here
@@ -217,6 +220,7 @@ router.post("/javaquestion", async (req, res) => {
 
       options,
       skills,
+      Difficulty_Level
     });
 
     await newQuestion.save();
@@ -230,5 +234,71 @@ router.post("/javaquestion", async (req, res) => {
       .json({ error: "An error occurred while adding the question." });
   }
 });
+
+//To post the selected questions into the database
+
+
+
+async function storeQuestion(question){
+
+
+  const questionMap=new Map();
+  const mname = await modelmanagername.find();
+  mname.forEach(item =>{
+   if(item.Managername==question.Manager_Name){
+       questionMap.set(item.Managername,question)
+
+   }
+   for(const [key,value] of questionMap){
+    console.log(`${key}:${value}`)
+   }
+   return questionMap;
+
+  });
+  //console.log(mname.Managername)
+ // for const
+}
+router.post("/questions",async(req,res)=>{
+
+  const question = new Question({
+    Manager_Name:req.body.Manager_Name,
+    question:req.body.Question,
+    option:req.body.Option,
+    duration:req.body.Duration,
+    cutoff:req.body.Cutoff
+
+  });
+  let a=[];
+  a.push(question.Manager_Name,question.question,question.duration,question.cutoff);
+  a.forEach(item =>{
+    console.log(a);
+  })
+  //console.log(question.Manager_Name)
+  try {
+    const result = await storeQuestion(question);
+    const a1 = await question.save();
+    res.json(a1)
+    // .then(result =>{
+    //   console.log(result)
+    // })
+
+    // const final = JSON.stringify(result);
+
+    // res.setHeader("Content-Type", "application/json");
+    // const mapto = {};
+    // result.forEach((value, key) => {
+    //   mapto[key] = value;
+
+  // });
+  // res.send(JSON.stringify(mapto, null, 2));
+
+}
+   catch (error) {
+    res.send(error)
+
+
+  }
+});
+
 
 module.exports = router;
