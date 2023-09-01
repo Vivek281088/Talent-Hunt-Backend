@@ -11,7 +11,7 @@ const managername = require("../models/managername");
 
 const awsquestion = require("../models/aws");
 const javaquestion = require("../models/java");
-const Question=require("../models/questions_M1");
+const Questionpaper=require("../models/questions_M1");
 
 const collections = [awsquestion, javaquestion];
 const a = new Map();
@@ -244,14 +244,17 @@ async function storeQuestion(question){
 
   const questionMap=new Map();
   const mname = await modelmanagername.find();
+  //console.log("mname:",mname);
   mname.forEach(item =>{
    if(item.Managername==question.Manager_Name){
-       questionMap.set(item.Managername,question)
+    //console.log("mname",item.Managername)
+      questionMap.set(item.Managername,)
+     
+     
+     console.log(question.Manager_Name)
 
    }
-   for(const [key,value] of questionMap){
-    console.log(`${key}:${value}`)
-   }
+  //console.log("ques",questionMap);
    return questionMap;
 
   });
@@ -260,22 +263,22 @@ async function storeQuestion(question){
 }
 router.post("/questions",async(req,res)=>{
 
-  const question = new Question({
+  const question = new Questionpaper({
     Manager_Name:req.body.Manager_Name,
-    question:req.body.Question,
-    option:req.body.Option,
-    duration:req.body.Duration,
-    cutoff:req.body.Cutoff
+    questions:req.body.questions,
+    duration:req.body.duration,
+    cutoff:req.body.cutoff
 
   });
   let a=[];
-  a.push(question.Manager_Name,question.question,question.duration,question.cutoff);
-  a.forEach(item =>{
-    console.log(a);
-  })
+  a.push(question.Manager_Name,question.questions,question.duration,question.cutoff);
+  //a.forEach(item =>{
+    //console.log("a:",a);
+  //})
   //console.log(question.Manager_Name)
   try {
-    const result = await storeQuestion(question);
+    //const result = await storeQuestion(question);
+    //console.log("result:",result)
     const a1 = await question.save();
     res.json(a1)
     // .then(result =>{
@@ -299,6 +302,54 @@ router.post("/questions",async(req,res)=>{
 
   }
 });
+//get by managername
+router.get('/getqbymanagername',async(req,res)=>{
+  const Manager_Name=req.body.Manager_Name;
+  console.log(Manager_Name)
+  try{
+  
+    if(!Manager_Name)
+    {
+      return res.status(400).json({error:'Name paramter is required'});
+    }
+    const qp=await Questionpaper.find({Manager_Name});
+    if(!qp || qp.length===0){
+      return res.status(404).json({error:'No users found with that name'});
+    }
+    const questions=qp.map(Questionpaper =>Questionpaper.questions); 
+    // const arrayofquestions=[];
+    // arrayofquestions.push(questions)
+    
+    // const mapping=new map();
+    //  mapping.set("hi","hi");
+    // res.json(questions);
+    
+    res.setHeader("Content-Type", "application/json");
+    const mapto = {};
+    mapto[Manager_Name] =questions;
+    // questions.forEach((value, key) => {
+    //   mapto[key] = value;
+    // });
+    res.send(JSON.stringify(mapto, null, 2));
 
+  }
+  catch(error)
+  {
+    console.log(error)
+    res.status(500).json({error:'Server Error'});
+
+  }
+
+})
+
+router.get("/getquestion", async (req, res) => {
+  try {
+    const skill = await Question.find();
+
+    res.json(skill);
+  } catch (err) {
+    res.send("Error" + err);
+  }
+});
 
 module.exports = router;
