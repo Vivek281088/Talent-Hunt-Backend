@@ -297,7 +297,7 @@ router.post("/questions",async(req,res)=>{
 
 }
    catch (error) {
-    res.send(error)
+    res.send(error);
 
 
   }
