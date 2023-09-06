@@ -10,14 +10,6 @@ const router = express.Router()
 
  
 
-//const awsQuestions = require('../models/aws')
-
- 
-
- 
-
- 
-
 const questionSchema1 = new mongoose.Schema({
 
  

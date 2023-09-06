@@ -24,7 +24,7 @@ cutoff: { type: Number },
 
 skills: { type: String },
 
-Difficulty_Level: { type: String } // Add any additional fields you need
+Difficulty_Level: { type: String } 
 
 });
 

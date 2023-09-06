@@ -46,7 +46,7 @@ console.log('connected to database....')
 
  
 
-const alienRouter = require('./routers/crud')
+const alienRouter = require('./routers/skill_selectpage')
 
 app.use('/skill', alienRouter)
 
