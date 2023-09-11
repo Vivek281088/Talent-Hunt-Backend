@@ -101,7 +101,7 @@ exports.get_managername=async(req,res)=>{
 
 exports.post_awsquestion=async(req,res)=>{
     try {
-        const { question, questionType, options, skills } = req.body;
+        const { question, questionType, options, skills, Difficulty_Level} = req.body;
     
         const newQuestion = new awsquestion({
           question,
@@ -111,6 +111,8 @@ exports.post_awsquestion=async(req,res)=>{
           options,
     
           skills,
+
+          Difficulty_Level
         });
     
         await newQuestion.save();
@@ -130,7 +132,7 @@ exports.post_awsquestion=async(req,res)=>{
 
 exports.post_javaquestion =async (req, res) => {
     try {
-      const { question, questionType, options, skills } = req.body;
+      const { question, questionType, options, skills, Difficulty_Level} = req.body;
   
       const newQuestion = new javaquestion({
         question,
@@ -140,6 +142,8 @@ exports.post_javaquestion =async (req, res) => {
         options,
   
         skills,
+
+        Difficulty_Level
       });
   
       await newQuestion.save();
@@ -167,7 +171,17 @@ exports.post_javaquestion =async (req, res) => {
   
         cutoff: dataToSave.cuttoff,
   
-        skills: dataToSave.skills,
+        Skill: dataToSave.Skill,
+
+        fileName: dataToSave.fileName,
+        
+        Managername: dataToSave.Managername,
+        
+        isCreate: dataToSave.isCreate,
+
+        isEdit: dataToSave.isEdit,
+        
+        isMail: dataToSave.isMail,
       });
   
       const savedQuestionpaper = await questionpaper.save();
@@ -180,3 +194,39 @@ exports.post_javaquestion =async (req, res) => {
     }
   }
 
+exports.latest_version = async (req, res) => {
+   try {
+      const { Managername, Skill } = req.body;
+      const sortedSkill = Skill.slice().sort();
+
+    // Query the database to find the latest version
+    const latestVersionRecord = await Questionpaper.findOne({
+      Managername,
+      Skill : sortedSkill
+    })
+      .sort("-fileName")
+      .exec();
+
+    if (!latestVersionRecord) {
+      // If no records match, return undefined
+      return res.json(undefined);
+    }
+
+    // Extract and return the latest version from the fileName
+    const latestVersionNumber = extractVersionNumber(
+      latestVersionRecord.fileName
+    );
+
+    res.json(latestVersionNumber);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+
+// Helper function to extract version number from fileName
+function extractVersionNumber(fileName) {
+  const match = fileName.match(/_v(\d+)$/);
+  return match ? parseInt(match[1]) : 1;
+}

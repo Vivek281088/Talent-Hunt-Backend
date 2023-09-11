@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
 
-question: { type: String },
+Questions: { type: String },
 
 options: { type: Array },
 
@@ -15,6 +15,7 @@ questionType: { type: String }
  
 
 const questionpaperSchema = new mongoose.Schema({
+    Managername:{trype:String},
 
 questions: [questionSchema],
 

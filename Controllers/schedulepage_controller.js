@@ -1,4 +1,5 @@
 const Questionpaper = require("../models/questiondb");
+// const Tabledata = require("../models/Tabledata");
 let optionsState = {
   create: false,
 
@@ -47,36 +48,88 @@ exports.post_table_content = async (req, res) => {
   }
 };
 
+
+
+
+
 exports.searchManager = async (req, res) => {
-  const { managerName, skills } = req.body;
+  const Managername = req.body.filterManager; // Make sure the field name matches the request body
+  const Skill = req.body.filterSkills;
 
   try {
     let query = {};
 
-    if (managerName) {
-      query.managerName = managerName;
+    if (Managername) {
+      // Perform a case-insensitive search for ManagerName
+      query.Managername = { $regex: new RegExp(Managername, "i") };
     }
 
-    if (skills && skills.length > 0) {
-      query.skills = { $in: skills };
+    if (Skill && Skill.length > 0) {
+      query.Skill = { $in: Skill };
     }
 
     const results = await Questionpaper.find(query);
 
     const responseData = results.map((entry) => ({
-      managerName: entry.managerName,
-
+      Managername: entry.Managername,
       fileName: entry.fileName,
-
-      create: entry.create,
-
-      edit: entry.edit,
-
-      mail: entry.mail,
+      isCreate: entry.isCreate,
+      isEdit: entry.isEdit,
+      isMail: entry.isMail,
     }));
 
     res.json(responseData);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+// exports.searchManager = async (req, res) => {
+//   const { filterManager, filterSkills } = req.body;
+//   console.log("Body:", req.body);
+
+//   try {
+//     let query = {};
+
+//     if (filterManager) {
+//       query.Managername = filterManager;
+//     }
+
+//     if (filterSkills && filterSkills.length > 0) {
+//       query.Skill = { $in: filterSkills };
+//     }
+    
+
+//     console.log("API Query:", query);
+
+//     const results = await Questionpaper.find(query);
+
+//     console.log("API Results:", results);
+
+//     const responseData = results.map((entry) => ({
+//       Managername: entry.Managername,
+//       fileName: entry.fileName,
+//       isCreate: entry.isCreate,
+//       isEdit: entry.isEdit,
+//       isMail: entry.isMail,
+//     }));
+
+//     res.json(responseData);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
+
+exports.existing_user_data = async (req, res) => {
+  try {
+    const skill1 = await Questionpaper.find();
+
+    res.json(skill1);
+  } catch (err) {
+    res.send("Error" + err);
   }
 };
