@@ -30,11 +30,21 @@ router.post("/awsquestion", skill_selectpage_controller.post_awsquestion);
 // To post java questions to the db
 router.post("/javaquestion", skill_selectpage_controller.post_javaquestion);
 
+
+router.post("/java_8_question", skill_selectpage_controller.post_java_8_question);
+
+router.post("/GraphQL_question", skill_selectpage_controller.post_GraphQL_question);
+
+router.post("/Nodejs_question", skill_selectpage_controller.post_Nodejs_question);
+
+router.post("/SpringBoot_question", skill_selectpage_controller.post_SpringBoot_question);
+
+
 //To store the selected questions to the db
 router.post("/questions", skill_selectpage_controller.storequestions);
 
 //To find the Latest Version
-router.post("/latest-version",skill_selectpage_controller.latest_version);
+router.post("/latest-version", skill_selectpage_controller.latest_version);
 
 /**
  * Author: Sapnashree Saravanan
@@ -62,6 +72,37 @@ router.post("/search", schedulepage.searchManager);
 
 router.get("/existinguser", schedulepage.existing_user_data);
 
+/**
+ * Author: Kabilan
+ * Usage:
+ */
+
+// To get the data after clicking view icon by filename
+router.post("/viewdata", schedulepage.view_question_paper);
+
+//to fetch the single filename
+router.get("/view_fetchData", schedulepage.view_fetch);
+
+//edit questions
+
+router.post("/edit_questions", schedulepage.edit_questions);
+
+/**
+ * Author: Aishwarya
+ * Usage:
+ */
+
+//edit icon
+router.get("/getselectedSkill_Question", schedulepage.getselectedSkill_Question);
+
+//To store the candidate list
+
+router.post("/add-candidate", schedulepage.Candidatepage);
+
+
+//To get the existing candidate list
+
+router.get("/existingcandidate", schedulepage.existing_candidate_list);
 
 
 

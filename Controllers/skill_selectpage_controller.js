@@ -4,11 +4,17 @@ const managername = require("../models/managername");
 const Questionpaper = require("../models/questiondb");
 const awsquestion = require("../models/aws");
 const javaquestion = require("../models/java");
+const java_8_question = require("../models/java8");
+const GraphQL_question = require("../models/graphql");
+const Nodejs_question = require("../models/nodejs")
+const SpringBoot_question = require("../models/springboot");
 
 const collections = [awsquestion, javaquestion];
 const a = new Map();
-a.set("JAVA", javaquestion);
-a.set("AWS", awsquestion);
+a.set("Java-8", java_8_question);
+a.set("GraphQL", GraphQL_question);
+a.set("Nodejs", Nodejs_question);
+a.set("SpringBoot", SpringBoot_question);
 async function fetchQuestions(findArray) {
   const valueMap = new Map();
 
@@ -101,7 +107,7 @@ exports.get_managername=async(req,res)=>{
 
 exports.post_awsquestion=async(req,res)=>{
     try {
-        const { question, questionType, options, skills, Difficulty_Level} = req.body;
+        const { question, questionType, options, skills, Difficulty_Level, answer} = req.body;
     
         const newQuestion = new awsquestion({
           question,
@@ -112,7 +118,9 @@ exports.post_awsquestion=async(req,res)=>{
     
           skills,
 
-          Difficulty_Level
+          Difficulty_Level,
+
+          answer
         });
     
         await newQuestion.save();
@@ -160,6 +168,135 @@ exports.post_javaquestion =async (req, res) => {
     }
   };
 
+
+  exports.post_java_8_question=async(req,res)=>{
+    try {
+        const { question, questionType, options, skills, Difficulty_Level,answer} = req.body;
+    
+        const newQuestion = new java_8_question({
+          question,
+    
+          questionType,
+    
+          options,
+    
+          skills,
+
+          Difficulty_Level,
+
+          answer
+        });
+    
+        await newQuestion.save();
+    
+        res.status(201).json({ message: "Question added successfully!" });
+      } catch (error) {
+        console.error("Error:", error);
+    
+        res
+    
+          .status(500)
+    
+          .json({ error: "An error occurred while adding the question." });
+      }
+}
+
+exports.post_GraphQL_question =async (req, res) => {
+  try {
+    const { question, questionType, options, skills, Difficulty_Level,answer} = req.body;
+
+    const newQuestion = new GraphQL_question({
+      question,
+
+      questionType,
+
+      options,
+
+      skills,
+
+      Difficulty_Level,
+
+      answer
+    });
+
+    await newQuestion.save();
+
+    res.status(201).json({ message: "Question added successfully!" });
+  } catch (error) {
+    console.error("Error:", error);
+
+    res
+
+      .status(500)
+
+      .json({ error: "An error occurred while adding the question." });
+  }
+};
+
+exports.post_Nodejs_question =async (req, res) => {
+  try {
+    const { question, questionType, options, skills, Difficulty_Level,answer} = req.body;
+
+    const newQuestion = new Nodejs_question({
+      question,
+
+      questionType,
+
+      options,
+
+      skills,
+
+      Difficulty_Level,
+
+      answer
+    });
+
+    await newQuestion.save();
+
+    res.status(201).json({ message: "Question added successfully!" });
+  } catch (error) {
+    console.error("Error:", error);
+
+    res
+
+      .status(500)
+
+      .json({ error });
+  }
+};
+
+exports.post_SpringBoot_question =async (req, res) => {
+  try {
+    const { question, questionType, options, skills, Difficulty_Level,answer} = req.body;
+
+    const newQuestion = new SpringBoot_question({
+      question,
+
+      questionType,
+
+      options,
+
+      skills,
+
+      Difficulty_Level,
+
+      answer
+    });
+
+    await newQuestion.save();
+
+    res.status(201).json({ message: "Question added successfully!" });
+  } catch (error) {
+    console.error("Error:", error);
+
+    res
+
+      .status(500)
+
+      .json({ error });
+  }
+};
+
   exports.storequestions =async(req,res)=>{
     const dataToSave = req.body.ques;
 
@@ -169,7 +306,7 @@ exports.post_javaquestion =async (req, res) => {
   
         duration: dataToSave.duration,
   
-        cutoff: dataToSave.cuttoff,
+        cutoff: dataToSave.cutoff,
   
         Skill: dataToSave.Skill,
 
