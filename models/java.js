@@ -28,7 +28,7 @@ const questionSchema1 = new mongoose.Schema({
   
   Difficulty_Level:{type:String},
   
-  answer:{type:String}
+  
 
   
 
