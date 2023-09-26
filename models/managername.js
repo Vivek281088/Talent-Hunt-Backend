@@ -17,7 +17,28 @@ const modelmanagername = require('../models/managername')
     
             required: true
     
-        }
+        },
+
+       emailId:{
+        type:String,
+        required:true
+       },
+
+       phoneNumber:{
+        type:Number,
+        required:true
+       },
+
+      password:{
+        type:String,
+        required:true
+      },
+      confirmPassword:{
+        type:String,
+        required:true
+      }
+
+
     
         })
 

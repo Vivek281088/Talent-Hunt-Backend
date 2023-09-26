@@ -1,6 +1,6 @@
 const modelskill = require("../models/skillset");
 const modelmanagername = require("../models/managername");
-const managername = require("../models/managername");
+
 const Questionpaper = require("../models/questiondb");
 const awsquestion = require("../models/aws");
 const javaquestion = require("../models/java");

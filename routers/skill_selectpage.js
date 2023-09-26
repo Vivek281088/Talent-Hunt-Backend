@@ -4,6 +4,7 @@ const router = express.Router();
 const skill_selectpage_controller = require("../Controllers/skill_selectpage_controller");
 const schedulepage = require("../Controllers/schedulepage_controller");
 const Questionpaper = require("../models/questiondb");
+const Login=require("../Controllers/Login_controller");
 ///skill select page
 
 /**
@@ -104,6 +105,8 @@ router.post("/add-candidate", schedulepage.Candidatepage);
 
 router.get("/existingcandidate", schedulepage.existing_candidate_list);
 
+//26.9.2023 post signup page
 
+router.get("/postsignup", Login_controller.signup);
 
 module.exports = router;
