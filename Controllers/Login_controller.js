@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
   
       res.json(savedManager);
     } catch (error) {
-      res.status(500).json({ error: "Error saving manager data" });
+      res.status(500).json({ error});
   
       res.status(500).json({ error: error.message });
     }

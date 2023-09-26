@@ -107,6 +107,6 @@ router.get("/existingcandidate", schedulepage.existing_candidate_list);
 
 //26.9.2023 post signup page
 
-router.get("/postsignup", Login_controller.signup);
+router.post("/postsignup", Login.signup);
 
 module.exports = router;

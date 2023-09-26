@@ -160,6 +160,8 @@ exports.Candidatepage = async (req, res) => {
     email_Status,
     email_Filename,
     questions,
+    score,
+    result
   } = req.body;
 
 
@@ -179,6 +181,10 @@ exports.Candidatepage = async (req, res) => {
     email_Filename,
 
     questions,
+
+    score,
+
+    result
   });
 
   try {
