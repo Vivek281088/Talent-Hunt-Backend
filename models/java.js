@@ -26,7 +26,9 @@ const questionSchema1 = new mongoose.Schema({
 
   skills:{type:String,required:true},
   
-  Difficulty_Level:{type:String}
+  Difficulty_Level:{type:String},
+  
+  answer:{type:String}
 
   
 
