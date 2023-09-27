@@ -8,48 +8,30 @@ const express = require('express')
 
 const router = express.Router()
 
-const questionSchema = new mongoose.Schema({
-  questions: { type: String },
-  skill:{type:String}
+ 
 
-  
-});
-
-const java8_questionSchema = new mongoose.Schema({
-
-    question: { type: String},
+const questionSchema1 = new mongoose.Schema({
 
  
 
- 
+  question: { type: String, required: true },
 
  
 
-    questionType: { type: String },
-  
-   
-  
-   
-  
-   
-  
-    options: { type: Array },
-  
-   
-  
-    skills:{type:String},
-  
-   
-  
-    Difficulty_Level:{type:String},
-  
-   
-  
-    answer:{type:[String]}
+  questionType: { type: String, required: true },
 
+ 
 
+  options: { type: Array, required: true },
+
+  skills:{type:String,required:true},
   
-
+  Difficulty_Level:{type:String},
+  
+  
+///from signup branch
+//commit from branch  
+//
  
 
 });
@@ -60,7 +42,7 @@ const java8_questionSchema = new mongoose.Schema({
 
  
 
-const java8question = mongoose.model('java8_question', java8_questionSchema);
+const javaquestion = mongoose.model('java8_question', questionSchema1);
 
  
 
@@ -68,4 +50,4 @@ const java8question = mongoose.model('java8_question', java8_questionSchema);
 
  
 
-module.exports = java8question
+module.exports = javaquestion

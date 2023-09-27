@@ -3,13 +3,13 @@ const modelmanagername = require("../models/managername");
 
 const Questionpaper = require("../models/questiondb");
 const awsquestion = require("../models/aws");
-const javaquestion = require("../models/java");
+const javaquestion = require("../models/java8");
 const java_8_question = require("../models/java8");
 const GraphQL_question = require("../models/graphql");
 const Nodejs_question = require("../models/nodejs")
 const SpringBoot_question = require("../models/springboot");
 
-const collections = [awsquestion, javaquestion];
+
 const a = new Map();
 a.set("Java-8", java_8_question);
 a.set("GraphQL", GraphQL_question);
