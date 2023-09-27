@@ -30,14 +30,14 @@ const candidatedetails = new mongoose.Schema({
   email_Filename: { type: String, required: true },
 
   questions: [questionSchema],
-
-  score:{type:Number},
-
-  result:{type:String},
-
-  
-
-
+  password:{
+    type:String,
+    required:true
+  },
+  confirmPassword:{
+    type:String,
+    required:true
+  }
 });
 
 module.exports = mongoose.model("candidatelist", candidatedetails);
