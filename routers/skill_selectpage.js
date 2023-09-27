@@ -47,6 +47,10 @@ router.post("/questions", skill_selectpage_controller.storequestions);
 //To find the Latest Version
 router.post("/latest-version", skill_selectpage_controller.latest_version);
 
+//27thSeptember Login decrypt and role based permissions.
+
+router.post("/authenticate",Login.authenticate);
+
 /**
  * Author: Sapnashree Saravanan
  * Usage:
@@ -107,6 +111,8 @@ router.get("/existingcandidate", schedulepage.existing_candidate_list);
 
 //26.9.2023 post signup page
 
-router.get("/postsignup", Login_controller.signup);
+router.post("/postsignup", Login.signup);
+
+router.post("/signin",Login.signin)
 
 module.exports = router;

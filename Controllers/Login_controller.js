@@ -26,3 +26,29 @@ exports.signup = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
+  exports.signin=async(req,res)=>{
+    const{Managername,password}=req.body;
+
+    const manager=await modelmanagername.findOne({Managername,password});
+
+    if(manager)
+    {
+      res.status(200).json("login success");
+    }
+    else{
+      res.status(200).json("login failed");
+    }
+
+
+  }
+
+exports.authenticate=async(req,res)=>{
+  const{username,password}=req.body;
+
+  const user=await verifyuser(username,password);
+
+  if(user){
+    
+  }
+}
