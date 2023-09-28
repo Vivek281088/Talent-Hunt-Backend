@@ -36,7 +36,7 @@ exports.post_table_content = async (req, res) => {
 
     isEdit,
 
-    isMail,
+    isMail
   });
 
   try {
@@ -154,14 +154,18 @@ exports.existing_user_data = async (req, res) => {
 exports.Candidatepage = async (req, res) => {
   const {
     email_Managername,
-    candidateName,
+    name,
     candidateEmail,
     candidatePhone,
     email_Status,
     email_Filename,
     questions,
     score,
-    result
+    result,
+    password,
+    confirmPassword,
+    Permissions,
+    role
   } = req.body;
 
 
@@ -170,7 +174,7 @@ exports.Candidatepage = async (req, res) => {
 
     email_Managername,
 
-    candidateName,
+    name,
 
     candidateEmail,
 
@@ -184,7 +188,11 @@ exports.Candidatepage = async (req, res) => {
 
     score,
 
-    result
+    result,
+    password,
+    confirmPassword,
+    Permissions,
+    role
   });
 
   try {

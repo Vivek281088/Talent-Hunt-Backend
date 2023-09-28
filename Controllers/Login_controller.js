@@ -47,14 +47,17 @@ exports.signup = async (req, res) => {
 
   }
 
-  const secretkey='';
-  async function verifyuser(username,password){
-    const candidate=await modelcandiate.findOne({username});
-    const manager=await modelmanagername.findOne({username});
+  const secretkey='awse';
+  async function verifyuser(name,password){
+    const candidate=await modelcandiate.findOne({name});
+    const manager=await modelmanagername.findOne({name});
+    console.log("cand",candidate)
+    console.log("manager",manager)
+
     if(candidate){
       if(candidate.password===password){
 
-        return{role:'user',username:candidate.candidateName,permissions:candidate.permissions};
+        return{role:'user',username:candidate.name,permissions:candidate.Permissions};
 
       }
     }
@@ -63,7 +66,7 @@ exports.signup = async (req, res) => {
     if(manager){
       if(manager.password===password){
 
-        return{role:'manager',username:manager.Managername,permissions:manager.permissions};
+        return{role:'manager',username:manager.Managername,permissions:manager.Permissions};
 
       }
     }
@@ -71,17 +74,17 @@ exports.signup = async (req, res) => {
     return null;
   }
 exports.authenticate=async(req,res)=>{
-  const{username,password}=req.body;
+  const{name,password}=req.body;
 
-  const user=await verifyuser(username,password);
+  const user=await verifyuser(name,password);
 
   if(user){
-    const token=jwt.sign({username:user.username,role:user.role},secretkey,{expiresIn:'1hr'});
+    const token=jwt.sign({Managername:user.name,role:user.role},secretkey,{expiresIn:'1hr'});
 
-    res.json({success:true,message:'Aauthentication Successful',token});
+    res.json({status:200,message:'Aauthentication Successful',token,role:user.role,permissions:user.permissions});
     
   }
   else{
-    res.status(401).json({success:false,message:'Authentication Failed'});
+    res.status(401).json({status:400,message:'Authentication Failed'});
   }
 }

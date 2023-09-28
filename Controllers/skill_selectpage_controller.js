@@ -73,7 +73,13 @@ exports.post_skills=async(req,res) =>{
 
 exports.post_managernames=async(req,res)=>{
     const mname = new modelmanagername({
-        Managername: req.body.Managername,
+        name: req.body.name,
+        emailId:req.body.emailId,
+        phoneNumber:req.body.phoneNumber,
+        password:req.body.password,
+        confirmPassword:req.body.confirmPassword,
+        Permissions:req.body.Permissions,
+        role:req.body.role
       });
     
       try {
