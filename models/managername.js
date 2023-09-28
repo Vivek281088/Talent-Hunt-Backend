@@ -11,7 +11,7 @@ const modelmanagername = require('../models/managername')
 
     const hiringmanager = new mongoose.Schema({
 
-        Managername: {
+        name: {
     
             type:String,
     
@@ -34,6 +34,14 @@ const modelmanagername = require('../models/managername')
         required:true
       },
       confirmPassword:{
+        type:String,
+        required:true
+      },
+      Permissions:{
+        type:String,
+        required:true
+      },
+      role:{
         type:String,
         required:true
       }
