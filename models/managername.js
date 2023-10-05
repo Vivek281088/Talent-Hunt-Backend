@@ -11,40 +11,38 @@ const modelmanagername = require('../models/managername')
 
     const hiringmanager = new mongoose.Schema({
 
+  
         name: {
     
-            type:String,
+            type:String
     
-            required: true
+           
     
         },
 
        emailId:{
-        type:String,
-        required:true
+        type:String
+       
        },
 
        phoneNumber:{
-        type:Number,
-        required:true
+        type:Number
        },
 
       password:{
-        type:String,
-        required:true
+        type:String
+       
       },
       confirmPassword:{
-        type:String,
-        required:true
+        type:String
+       
       },
-      Permissions:{
-        type:String,
-        required:true
-      },
-      role:{
-        type:String,
-        required:true
-      }
+      Permissions:["manager"],
+      role:["managerpage"]
+
+
+
+
 
 
     

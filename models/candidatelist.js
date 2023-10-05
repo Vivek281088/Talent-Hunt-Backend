@@ -38,14 +38,8 @@ const candidatedetails = new mongoose.Schema({
     type:String,
     required:true
   },
-  Permissions:{
-    type:String,
-    required:true
-  },
-  role:{
-    type:String,
-    required:true
-  }
+  Permissions:["candidatepage"],
+  role:["user"]
 
 });
 

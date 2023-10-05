@@ -51,6 +51,8 @@ router.post("/latest-version", skill_selectpage_controller.latest_version);
 
 router.post("/authenticate",Login.authenticate);
 
+router.post("/forgotpassword",Login.forgotpassword);
+
 /**
  * Author: Sapnashree Saravanan
  * Usage:

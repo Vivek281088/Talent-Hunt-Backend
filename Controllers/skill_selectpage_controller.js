@@ -78,8 +78,7 @@ exports.post_managernames=async(req,res)=>{
         phoneNumber:req.body.phoneNumber,
         password:req.body.password,
         confirmPassword:req.body.confirmPassword,
-        Permissions:req.body.Permissions,
-        role:req.body.role
+       
       });
     
       try {
