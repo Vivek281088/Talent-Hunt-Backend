@@ -20,7 +20,7 @@ const modelmanagername = require('../models/managername')
     
         },
 
-       emailId:{
+        candidateEmail:{
         type:String
        
        },

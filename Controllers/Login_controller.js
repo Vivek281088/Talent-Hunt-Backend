@@ -57,9 +57,9 @@ exports.signin = async (req, res) => {
 };
 
 const secretkey = "awse";
-async function verifyuser(name, password) {
-  const candidate = await modelcandiate.findOne({ name });
-  const manager = await modelmanagername.findOne({ name });
+async function verifyuser(candidateEmail, password) {
+  const candidate = await modelcandiate.findOne({ candidateEmail });
+  const manager = await modelmanagername.findOne({ candidateEmail });
   console.log("cand", candidate);
   console.log("manager", manager);
 
@@ -92,7 +92,7 @@ async function verifyuser(name, password) {
   return null;
 }
 exports.authenticate = async (req, res) => {
-  const { name, password } = req.body;
+  const { candidateEmail, password } = req.body;
   //console.log("pass",password)
 
   const encryptionKey = "123456qwertyuio";
@@ -115,7 +115,7 @@ exports.authenticate = async (req, res) => {
   console.log("Decrypted Data:", decryptedData);
   console.log("before", password);
  console.log("backend Password Recieved" ,decryptedData )
-  const user = await verifyuser(name, decryptedData);
+  const user = await verifyuser(candidateEmail, decryptedData);
 
   if (user) {
     // const token=jwt.sign({Managername:user.name,role:user.role},secretkey,{expiresIn:'1hr'});
@@ -127,7 +127,7 @@ exports.authenticate = async (req, res) => {
       permissions: user.permissions,
     });
   } else {
-    res.status(401).json({ status: 400, message: "Authentication Failed" });
+    res.json({ status: 400});
   }
 };
 
