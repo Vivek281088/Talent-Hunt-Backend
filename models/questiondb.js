@@ -24,7 +24,9 @@ const questionSchema = new mongoose.Schema({
 
  
 
-  Selected : {type : Boolean}
+  Selected : {type : Boolean},
+
+  answer: {type: [String]}
 
 });
 

@@ -154,7 +154,7 @@ exports.existing_user_data = async (req, res) => {
 exports.Candidatepage = async (req, res) => {
   const {
     email_Managername,
-    name,
+    candidateName,
     candidateEmail,
     candidatePhone,
     email_Status,
@@ -162,6 +162,8 @@ exports.Candidatepage = async (req, res) => {
     questions,
     score,
     result,
+    cutoff,
+    duration,
     password,
     confirmPassword,
     Permissions,
@@ -174,7 +176,7 @@ exports.Candidatepage = async (req, res) => {
 
     email_Managername,
 
-    name,
+    candidateName,
 
     candidateEmail,
 
@@ -189,6 +191,8 @@ exports.Candidatepage = async (req, res) => {
     score,
 
     result,
+    cutoff,
+    duration,
     password,
     confirmPassword,
     Permissions,

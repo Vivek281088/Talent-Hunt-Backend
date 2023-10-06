@@ -109,10 +109,23 @@ router.post("/add-candidate", schedulepage.Candidatepage);
 
 router.get("/existingcandidate", schedulepage.existing_candidate_list);
 
+//To get the candidate list
+
+router.get("/candidate_submitted", Login.candidate_list);
+
+router.put("/reviewer_updating_score_result",Login.reviewer_update)
+
 //26.9.2023 post signup page
 
 router.post("/postsignup", Login.signup);
 
 router.post("/signin",Login.signin)
+
+
+router.post("/candidate-details", Login.fetching_candidate_details)
+
+router.put("/candidate_status-update",Login.updateStatus)
+
+router.post("/postcandidate_assessment",Login.candidateassessment)
 
 module.exports = router;

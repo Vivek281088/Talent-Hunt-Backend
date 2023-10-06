@@ -50,7 +50,7 @@ const alienRouter = require('./routers/skill_selectpage')
 
 app.use('/skill', alienRouter)
 
-app.listen(9001, () => {
+app.listen(9000, () => {
 
     console.log('Server Started')
 
