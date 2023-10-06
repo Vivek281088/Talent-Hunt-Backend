@@ -109,4 +109,8 @@ router.get("/existingcandidate", schedulepage.existing_candidate_list);
 
 router.post("/postsignup", Login.signup);
 
+//29.9.2023 to store the candidate assessment page for reviewer
+
+router.post("/postcandidate_assessment",Login.candidateassessment)
+
 module.exports = router;

@@ -3,7 +3,6 @@ const modelmanagername = require("../models/managername");
 
 const Questionpaper = require("../models/questiondb");
 const awsquestion = require("../models/aws");
-const javaquestion = require("../models/java8");
 const java_8_question = require("../models/java8");
 const GraphQL_question = require("../models/graphql");
 const Nodejs_question = require("../models/nodejs")

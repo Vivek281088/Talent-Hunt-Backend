@@ -42,7 +42,7 @@ const questionSchema1 = new mongoose.Schema({
 
  
 
-const javaquestion = mongoose.model('java8_question', questionSchema1);
+const java_8_question = mongoose.model('java8_question', questionSchema1);
 
  
 
@@ -50,4 +50,4 @@ const javaquestion = mongoose.model('java8_question', questionSchema1);
 
  
 
-module.exports = javaquestion
+module.exports = java_8_question
