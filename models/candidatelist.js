@@ -19,7 +19,7 @@ const questionSchema = new mongoose.Schema({
 const candidatedetails = new mongoose.Schema({
   email_Managername: { type: String, required: true },
 
-  candidateName: { type: String, required: true },
+  candidateName: { type: String},
 
   candidateEmail: { type: String, required: true },
 
@@ -30,13 +30,25 @@ const candidatedetails = new mongoose.Schema({
   email_Filename: { type: String, required: true },
 
   questions: [questionSchema],
-
-  score:{type:Number},
-
-  result:{type:String},
-
   
+  score: {type:  Number},
 
+  result: {type: String},
+
+  cutoff : {type: Number},
+
+  duration : {type: Number},
+
+  password:{
+    type:String,
+    
+  },
+  confirmPassword:{
+    type:String,
+    
+  },
+  Permissions:["candidatepage"],
+  role:["user"]
 
 });
 

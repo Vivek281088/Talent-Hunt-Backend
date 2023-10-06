@@ -1,38 +1,79 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
  
 
 const questionSchema = new mongoose.Schema({
 
-Questions: { type: String },
+  question: { type: String },
 
-options: { type: Array },
+ 
 
-questionType: { type: String }
+  options: { type: Array },
+
+ 
+
+  questionType: { type: String },
+
+ 
+
+  skills: { type: String },
+
+ 
+
+  Difficulty_Level: { type: String },
+
+ 
+
+  Selected : {type : Boolean},
+
+  answer: {type: [String]}
 
 });
 
  
 
 const questionpaperSchema = new mongoose.Schema({
-    Managername:{trype:String},
 
-questions: [questionSchema],
+  questions: [questionSchema],
 
-duration: { type: Number },
+ 
 
-cutoff: { type: Number },
+  duration: { type: Number },
 
-skills: { type: String },
+ 
 
-Difficulty_Level: { type: String } 
+  cutoff: { type: Number },
+
+ 
+
+  Skill: { type: Array },
+
+ 
+
+  fileName: { type: String },
+
+ 
+
+  isCreate: { type: Boolean },
+
+ 
+
+  isEdit: { type: Boolean },
+
+ 
+
+  isMail: { type: Boolean },
+
+ 
+
+  Managername: { type: String },
 
 });
 
  
 
-const Questionpaper = mongoose.model('Questionpaper', questionpaperSchema);
+const Questionpaper = mongoose.model("Questionpaper", questionpaperSchema);
 
  
 
-module.exports = Questionpaper
+module.exports = Questionpaper;

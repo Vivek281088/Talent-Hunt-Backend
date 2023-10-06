@@ -36,7 +36,7 @@ exports.post_table_content = async (req, res) => {
 
     isEdit,
 
-    isMail,
+    isMail
   });
 
   try {
@@ -161,7 +161,13 @@ exports.Candidatepage = async (req, res) => {
     email_Filename,
     questions,
     score,
-    result
+    result,
+    cutoff,
+    duration,
+    password,
+    confirmPassword,
+    Permissions,
+    role
   } = req.body;
 
 
@@ -184,7 +190,13 @@ exports.Candidatepage = async (req, res) => {
 
     score,
 
-    result
+    result,
+    cutoff,
+    duration,
+    password,
+    confirmPassword,
+    Permissions,
+    role
   });
 
   try {

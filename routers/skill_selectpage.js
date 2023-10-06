@@ -47,6 +47,12 @@ router.post("/questions", skill_selectpage_controller.storequestions);
 //To find the Latest Version
 router.post("/latest-version", skill_selectpage_controller.latest_version);
 
+//27thSeptember Login decrypt and role based permissions.
+
+router.post("/authenticate",Login.authenticate);
+
+router.post("/forgotpassword",Login.forgotpassword);
+
 /**
  * Author: Sapnashree Saravanan
  * Usage:
@@ -105,11 +111,23 @@ router.post("/add-candidate", schedulepage.Candidatepage);
 
 router.get("/existingcandidate", schedulepage.existing_candidate_list);
 
+//To get the candidate list
+
+router.get("/candidate_submitted", Login.candidate_list);
+
+router.put("/reviewer_updating_score_result",Login.reviewer_update)
+
 //26.9.2023 post signup page
 
 router.post("/postsignup", Login.signup);
 
 //29.9.2023 to store the candidate assessment page for reviewer
+router.post("/signin",Login.signin)
+
+
+router.post("/candidate-details", Login.fetching_candidate_details)
+
+router.put("/candidate_status-update",Login.updateStatus)
 
 router.post("/postcandidate_assessment",Login.candidateassessment)
 
