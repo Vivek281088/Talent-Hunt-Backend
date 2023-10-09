@@ -2,8 +2,8 @@ const modelskill = require("../models/skillset");
 const modelmanagername = require("../models/managername");
 
 const Questionpaper = require("../models/questiondb");
-const awsquestion = require("../models/aws");
-const javaquestion = require("../models/java8");
+// const awsquestion = require("../models/aws");
+
 const java_8_question = require("../models/java8");
 const GraphQL_question = require("../models/graphql");
 const Nodejs_question = require("../models/nodejs")
@@ -110,68 +110,40 @@ exports.get_managername=async(req,res)=>{
       }
 }
 
-exports.post_awsquestion=async(req,res)=>{
-    try {
-        const { question, questionType, options, skills, Difficulty_Level, answer} = req.body;
+// exports.post_awsquestion=async(req,res)=>{
+//     try {
+//         const { question, questionType, options, skills, Difficulty_Level, answer} = req.body;
     
-        const newQuestion = new awsquestion({
-          question,
+//         const newQuestion = new awsquestion({
+//           question,
     
-          questionType,
+//           questionType,
     
-          options,
+//           options,
     
-          skills,
+//           skills,
 
-          Difficulty_Level,
+//           Difficulty_Level,
 
-          answer
-        });
+//           answer
+//         });
     
-        await newQuestion.save();
+//         await newQuestion.save();
     
-        res.status(201).json({ message: "Question added successfully!" });
-      } catch (error) {
-        console.error("Error:", error);
+//         res.status(201).json({ message: "Question added successfully!" });
+//       } catch (error) {
+//         console.error("Error:", error);
     
-        res
+//         res
     
-          .status(500)
+//           .status(500)
     
-          .json({ error: "An error occurred while adding the question." });
-      }
-}
+//           .json({ error: "An error occurred while adding the question." });
+//       }
+// }
 
 
-exports.post_javaquestion =async (req, res) => {
-    try {
-      const { question, questionType, options, skills, Difficulty_Level} = req.body;
-  
-      const newQuestion = new javaquestion({
-        question,
-  
-        questionType,
-  
-        options,
-  
-        skills,
 
-        Difficulty_Level
-      });
-  
-      await newQuestion.save();
-  
-      res.status(201).json({ message: "Question added successfully!" });
-    } catch (error) {
-      console.error("Error:", error);
-  
-      res
-  
-        .status(500)
-  
-        .json({ error: "An error occurred while adding the question." });
-    }
-  };
 
 
   exports.post_java_8_question=async(req,res)=>{

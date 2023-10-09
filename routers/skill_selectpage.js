@@ -3,7 +3,7 @@ const bodyparser = require("body-parser");
 const router = express.Router();
 const skill_selectpage_controller = require("../Controllers/skill_selectpage_controller");
 const schedulepage = require("../Controllers/schedulepage_controller");
-const Questionpaper = require("../models/questiondb");
+// const Questionpaper = require("../models/questiondb");
 const Login=require("../Controllers/Login_controller");
 ///skill select page
 
@@ -25,11 +25,11 @@ router.post("/mnames", skill_selectpage_controller.post_managernames);
 // Displaying Skill names
 router.get("/getskill", skill_selectpage_controller.get_skills);
 
-//To post the aws Question to db
-router.post("/awsquestion", skill_selectpage_controller.post_awsquestion);
+// //To post the aws Question to db
+// router.post("/awsquestion", skill_selectpage_controller.post_awsquestion);
 
 // To post java questions to the db
-router.post("/javaquestion", skill_selectpage_controller.post_javaquestion);
+// router.post("/javaquestion", skill_selectpage_controller.post_javaquestion);
 
 
 router.post("/java_8_question", skill_selectpage_controller.post_java_8_question);
