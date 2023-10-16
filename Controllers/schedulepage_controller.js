@@ -165,9 +165,8 @@ exports.Candidatepage = async (req, res) => {
     cutoff,
     duration,
     password,
-    confirmPassword,
-    Permissions,
-    role
+    confirmPassword
+    
   } = req.body;
 
 
@@ -194,9 +193,7 @@ exports.Candidatepage = async (req, res) => {
     cutoff,
     duration,
     password,
-    confirmPassword,
-    Permissions,
-    role
+    confirmPassword
   });
 
   try {
@@ -224,3 +221,35 @@ exports.existing_candidate_list = async (req, res) => {
   }
 };
 
+//filter candidate
+exports.filtering_candidate_details = async (req, res) => {
+  const result = req.body.result;
+  const candidateName = req.body.candidateName;
+ 
+  try {
+    // Create a filter object based on query parameters
+    const filter = {};
+ 
+    if (candidateName) {
+      // If 'names' is entered as an array with one or more names, add it to the filter with case-insensitive regex
+      filter.candidateName = { $regex: new RegExp(candidateName, "i") };
+    }
+    if (result) {
+      // If 'result' is entered and not an empty string, add it to the filter
+      filter.result = { $in: result };
+    }
+ 
+    const filteredData = await candidate.find(filter);
+ 
+    // Check if there was no data found
+    if (!filteredData || filteredData.length === 0) {
+      return res.status(404).json({ error: "No matching candidates found" });
+    }
+    res.json(filteredData);
+  } catch (error) {
+    // console.error(error);
+    res.json(error);
+ 
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

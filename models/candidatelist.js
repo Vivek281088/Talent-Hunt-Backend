@@ -14,6 +14,12 @@ const questionSchema = new mongoose.Schema({
   skills: { type: String },
 
   Difficulty_Level: { type: String },
+
+  selectedOption: { type: [String] },
+
+  // Reviewer
+  reviewerResponse: {type: String}
+
 });
 
 const candidatedetails = new mongoose.Schema({

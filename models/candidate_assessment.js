@@ -18,6 +18,8 @@ const questionSchema = new mongoose.Schema({
   answer: { type: [String] },
 
   selectedOption: { type: [String] },
+
+  reviewerResponse: {type: String}
 });
 
 const candidate_assessment = new mongoose.Schema({
@@ -34,6 +36,8 @@ const candidate_assessment = new mongoose.Schema({
   cutoff: { type: Number, required: true },
 
   duration: { type: Number, required: true },
+  
+  testId:{type:String}
 });
 
 module.exports = mongoose.model("candidate_assessment", candidate_assessment);

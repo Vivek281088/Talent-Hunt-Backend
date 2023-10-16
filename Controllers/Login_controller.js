@@ -6,12 +6,38 @@ const candidateassessment = require("../models/candidate_assessment");
 const candidatelist = require("../models/candidatelist");
 // const express=require('express');
 const bodyparser = require("body-parser");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 // const crypto = require("crypto");
 const CryptoJS = require("crypto-js");
 
+exports.candidate_response_byTestId = async (req, res) => {
+  const { testId } = req.body;
+
+  try {
+    const user = await candidateassessment.findOne({ testId });
+
+    console.log("testid1", testId);
+
+    if (!user || user.length === 0) {
+      return res.status(404).json({ message: "Usernot found" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 exports.signup = async (req, res) => {
-  const { Managername, candidateEmail, phoneNumber, password, confirmPassword } = req.body;
+  const {
+    Managername,
+    candidateEmail,
+    phoneNumber,
+    password,
+    confirmPassword,
+  } = req.body;
 
   console.log(password, confirmPassword, phoneNumber);
   const newManager = new modelmanagername({
@@ -78,11 +104,11 @@ async function verifyuser(candidateEmail, password) {
   // if(mana)
 
   if (manager) {
-    console.log("hi from manager",manager.password)
-      console.log("hi from managerpass",password)                                                         
+    console.log("hi from manager", manager.password);
+    console.log("hi from managerpass", password);
     if (manager.password === password) {
-      console.log("hi from manager",manager.password)
-      console.log("hi from managerpass",password)
+      console.log("hi from manager", manager.password);
+      console.log("hi from managerpass", password);
 
       return {
         role: "manager",
@@ -94,45 +120,128 @@ async function verifyuser(candidateEmail, password) {
 
   return null;
 }
+// exports.authenticate = async (req, res) => {
+//   const { candidateEmail, password } = req.body;
+//   console.log("pass", password);
+
+//   const encryptionKey = "123456qwertyuio";
+
+//   const ivBase64 = "yourInitializationVector"; // Use the same base64 IV used for encryption
+
+//   function decryptData(encryptedData) {
+//     const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, encryptionKey, {
+//       iv: CryptoJS.enc.Base64.parse(ivBase64), // Parse base64 IV
+
+//       mode: CryptoJS.mode.CBC,
+
+//       padding: CryptoJS.pad.Pkcs7,
+//     });
+
+//     return decryptedBytes.toString(CryptoJS.enc.Utf8);
+//   }
+//   const decryptedData = decryptData(password);
+
+//   console.log("Decrypted Data:", decryptedData);
+//   console.log("before", password);
+//   console.log("backend Password Recieved", decryptedData);
+//   const user = await verifyuser(candidateEmail, decryptedData);
+
+//   if (user) {
+//     // const token=jwt.sign({Managername:user.name,role:user.role},secretkey,{expiresIn:'1hr'});
+
+//     res.json({
+//       status: 200,
+//       message: "Aauthentication Successful",
+//       role: user.role,
+//       permissions: user.permissions,
+//     });
+//   } else {
+//     res.json({ status: 400 });
+//   }
+// };
+////////////////////////////////////////////////////////////
 exports.authenticate = async (req, res) => {
+
   const { candidateEmail, password } = req.body;
-  console.log("pass",password)
+
+  //console.log("pass",password)
+
+ 
 
   const encryptionKey = "123456qwertyuio";
 
+ 
+
   const ivBase64 = "yourInitializationVector"; // Use the same base64 IV used for encryption
 
+ 
+
   function decryptData(encryptedData) {
+
     const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, encryptionKey, {
+
       iv: CryptoJS.enc.Base64.parse(ivBase64), // Parse base64 IV
+
+ 
 
       mode: CryptoJS.mode.CBC,
 
+ 
+
       padding: CryptoJS.pad.Pkcs7,
+
     });
+
+ 
 
     return decryptedBytes.toString(CryptoJS.enc.Utf8);
+
   }
+
   const decryptedData = decryptData(password);
 
+ 
+
   console.log("Decrypted Data:", decryptedData);
+
   console.log("before", password);
+
  console.log("backend Password Recieved" ,decryptedData )
+
   const user = await verifyuser(candidateEmail, decryptedData);
 
+ 
+
   if (user) {
+
     // const token=jwt.sign({Managername:user.name,role:user.role},secretkey,{expiresIn:'1hr'});
 
+    const secretKey = 'yourSecretKey'; // Replace with a secure secret key
+
+    const token = jwt.sign({ Managername: user.name, role: user.role }, secretKey, { expiresIn: '1hr' });
+
     res.json({
+
       status: 200,
+
       message: "Aauthentication Successful",
+
       role: user.role,
+
       permissions: user.permissions,
+
+      token: token,
+
     });
+
   } else {
+
     res.json({ status: 400});
+
   }
+
 };
+
 
 exports.forgotpassword = async (req, res) => {
   const { Managername, candidateEmail, password, confirmPassword } = req.body;
@@ -141,7 +250,10 @@ exports.forgotpassword = async (req, res) => {
     return res.json({ status: 404 });
   } else {
     try {
-      const user = await modelmanagername.findOne({ Managername, candidateEmail });
+      const user = await modelmanagername.findOne({
+        Managername,
+        candidateEmail,
+      });
       console.log("user", user);
       if (!user) {
         return res.json({ status: 200 });
@@ -208,6 +320,7 @@ exports.candidateassessment = async (req, res) => {
     endTime,
     cutoff,
     duration,
+    testId,
   } = req.body;
 
   const newCandidate = new candidateassessment({
@@ -224,6 +337,7 @@ exports.candidateassessment = async (req, res) => {
     cutoff,
 
     duration,
+    testId,
   });
 
   try {
@@ -253,16 +367,41 @@ exports.candidate_list = async (req, res) => {
 
 exports.reviewer_update = async (req, res) => {
   try {
-    const { _id, score, result } = req.body;
+    const { _id, score, result,questions, email_Status } = req.body;
 
     // Update the score and result in the database
 
-    await candidatelist.findByIdAndUpdate(_id, { score, result });
+    await candidatelist.findByIdAndUpdate(_id, { score, result , questions, email_Status});
 
     res.json({
       success: true,
 
       message: "Score and result updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+
+      message: "An error occurred while updating score and result",
+    });
+  }
+};
+
+// Reviewer
+exports.updateQuestions_for_reviewer = async (req, res) => {
+  try {
+    const { _id, questions } = req.body;
+
+    // Update the score and result in the database
+
+    await candidatelist.findByIdAndUpdate(_id, { questions });
+
+    res.json({
+      success: true,
+
+      message: "Questions updated successfully",
     });
   } catch (error) {
     console.error(error);

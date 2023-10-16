@@ -129,5 +129,13 @@ router.post("/candidate-details", Login.fetching_candidate_details)
 router.put("/candidate_status-update",Login.updateStatus)
 
 router.post("/postcandidate_assessment",Login.candidateassessment)
+router.post("/candidate-response-by-testId", Login.candidate_response_byTestId)
+
+// Reviewer
+router.put("/updating_questions_for_reviewer", Login.updateQuestions_for_reviewer);
+
+//filter the candidate name in Assessment Page
+router.post("/filtercandidate", schedulepage.filtering_candidate_details);
+
 
 module.exports = router;
