@@ -12,7 +12,7 @@ const modelmanagername = require('../models/managername')
     const hiringmanager = new mongoose.Schema({
 
   
-        name: {
+      Managername: {
     
             type:String
     

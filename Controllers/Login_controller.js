@@ -7,15 +7,16 @@ const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const CryptoJS = require("crypto-js");
+const managername = require("../models/managername");
 
 exports.signup = async (req, res) => {
-  const { name, emailId, phoneNumber, password, confirmPassword } = req.body;
+  const { Managername, candidateEmail, phoneNumber, password, confirmPassword } = req.body;
 
   console.log(password, confirmPassword, phoneNumber);
   const newManager = new modelmanagername({
-    name,
+    Managername,
 
-    emailId,
+    candidateEmail,
 
     phoneNumber,
 
@@ -24,25 +25,29 @@ exports.signup = async (req, res) => {
     confirmPassword,
   });
   // if(password==confirmPassword){
-  try {
-    if (password == confirmPassword) {
-      console.log("entered");
-      const savedManager = await newManager.save();
-      res.json(savedManager);
-    } else {
-      console.log("er");
-      res.status(200).json({ status: 404 });
-      // res.status()
+   
+      try {
+        if (password == confirmPassword) {
+          console.log("entered");
+          const savedManager = await newManager.save();
+          res.json(savedManager);
+        } else {
+          console.log("er");
+          res.json({ status: 404 });
+          // res.status()
+        }
+      } catch (error) {
+        res.status(500).json({ error });
+    
+        res.status(500).json({ error: error.message });
+      }
     }
-  } catch (error) {
-    res.status(500).json({ error });
+    
 
-    res.status(500).json({ error: error.message });
-  }
   // }
   // else{
   // }
-};
+// };
 
 exports.signin = async (req, res) => {
   const { Managername, password } = req.body;
@@ -119,12 +124,14 @@ exports.authenticate = async (req, res) => {
 
   if (user) {
     // const token=jwt.sign({Managername:user.name,role:user.role},secretkey,{expiresIn:'1hr'});
-
+    const secretKey = 'yourSecretKey'; // Replace with a secure secret key
+    const token = jwt.sign({ Managername: user.name, role: user.role }, secretKey, { expiresIn: '1hr' });
     res.json({
       status: 200,
       message: "Aauthentication Successful",
       role: user.role,
       permissions: user.permissions,
+      token: token, 
     });
   } else {
     res.json({ status: 400});
@@ -132,13 +139,14 @@ exports.authenticate = async (req, res) => {
 };
 
 exports.forgotpassword = async (req, res) => {
-  const { name, emailId, password, confirmPassword } = req.body;
+  const { Managername, candidateEmail, password, confirmPassword } = req.body;
+  console.log(Managername,candidateEmail)
 
   if (password != confirmPassword) {
     return res.json({ status: 404 });
   } else {
     try {
-      const user = await modelmanagername.findOne({ name, emailId });
+      const user = await modelmanagername.findOne({ Managername, candidateEmail });
       console.log("user", user);
       if (!user) {
         return res.json({ status: 200 });
